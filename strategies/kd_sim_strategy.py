@@ -83,9 +83,9 @@ class ouob(bt.Strategy):
 
                 # 設置停損
             elif self.dataclose < (self.exeprice * (1 - self.params.stop_loss)):
-                self.log(f'CLOSE CREATE STOP LOSS{self.dataclose[0]:2f}')
+                self.log(f'CLOSE CREATE STOP LOSS {self.dataclose[0]:2f}')
                 self.order = self.close()
                 # 設停利
             elif self.dataclose > (self.exeprice * (1 + self.params.stop_profit)):
-                self.log(f'CLOSE CREATE STOP PROFIT{self.dataclose[0]:2f}')
+                self.log(f'CLOSE CREATE STOP PROFIT {self.dataclose[0]:2f}')
                 self.order = self.close()

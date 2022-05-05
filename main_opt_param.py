@@ -40,20 +40,22 @@ data2 = bt.feeds.YahooFinanceCSVData(
 
 
 
-# Add data and set position
+# Add data
 cerebro.adddata(data)
-cerebro.broker.setcash(1000000.0)
+
 cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name='sharpe_ratio')
-cerebro.addsizer(bt.sizers.FixedSize, stake=5)
-# opt
+
+# Add strategy
 
 cerebro.optstrategy(sigwf.ouob, nbar2close_trade=range(2, 6),
-                   k_score_upperbound=range(10, 81, 10),
+                   k_score_buy=range(10, 81, 10),
                     stop_profit=np.linspace(0.01, 0.06, 5),
                     stop_loss=np.linspace(0.01, 0.06, 5))
 
-# cerebro.optstrategy(sigwf.ouob, nbar2close_trade=5,
-#                    k_score_upperbound=70)
+# Default position size
+cerebro.broker.setcash(1000000.0)
+cerebro.addsizer(bt.sizers.FixedSize, stake=5)
+
 
 if __name__ == '__main__':
     optimized_runs = cerebro.run()
@@ -65,13 +67,13 @@ if __name__ == '__main__':
             sharpe = strategy.analyzers.sharpe_ratio.get_analysis()
             final_results_list.append([
                 # ('k_score_buy', 20),('k_score_sell', 60) 參數換了，最佳化記得改
-                strategy.params.k_score_upperbound,
+                strategy.params.k_score_buy,
                 strategy.params.nbar2close_trade, strategy.params.stop_profit,
                 strategy.params.stop_loss,
 
                 PnL, sharpe['sharperatio']])
 
-    sort_by_sharpe = sorted(final_results_list, key=lambda x: x[5],
+    sort_by_sharpe = sorted(final_results_list, key=lambda x: x[4],
                              reverse=True)
     for line in sort_by_sharpe[:10]:
         print(line)
