@@ -13,6 +13,10 @@ python main_backtest.py
 
 ### 2. Strategies Available
 
-- #### 2.1 KD similarity strategy
+- #### 2.1 Binary Strategy
 
-- #### 2.2
+  you can define your own signal and import the csv file with signal for backtesting  
+
+- #### 2.2 Bollinger band strategy 
+
+  attempt to add filter to improve the original bband strategy 
