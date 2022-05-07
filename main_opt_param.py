@@ -43,18 +43,17 @@ data2 = bt.feeds.YahooFinanceCSVData(
 # Add data
 cerebro.adddata(data)
 
-cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name='sharpe_ratio')
-
 # Add strategy
-
+cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name='sharpe_ratio')
 cerebro.optstrategy(sigwf.ouob, nbar2close_trade=range(2, 6),
                    k_score_buy=range(10, 81, 10),
-                    stop_profit=np.linspace(0.01, 0.06, 5),
-                    stop_loss=np.linspace(0.01, 0.06, 5))
+                    stop_profit=list(np.linspace(0.01, 0.06, 5)),
+                    stop_loss=list(np.linspace(0.01, 0.06, 5)))
+
 
 # Default position size
-cerebro.broker.setcash(1000000.0)
-cerebro.addsizer(bt.sizers.FixedSize, stake=5)
+# cerebro.broker.setcash(1000000.0)
+cerebro.addsizer(bt.sizers.FixedSize, stake=3)
 
 
 if __name__ == '__main__':
